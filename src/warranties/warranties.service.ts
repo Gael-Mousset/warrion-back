@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { Warranty } from './interfaces/warranty.interface';
 import { CreateWarrantyDTO } from './dto/create-warranty.dto';
+import { UpdateWarrantyDTO } from './dto/update-warranty.dto';
 
 @Injectable()
 export class WarrantiesService {
@@ -15,7 +16,7 @@ export class WarrantiesService {
   }
 
   async findAll(): Promise<Warranty[]> {
-    return this.warrantyModel.find().populate('userId');
+    return this.warrantyModel.find();
   }
 
   async findByUserId(userId: string): Promise<Warranty[]> {
@@ -24,6 +25,10 @@ export class WarrantiesService {
 
   async findById(id: string): Promise<Warranty | null> {
     return this.warrantyModel.findById(id);
+  }
+
+  async updateById(id: string, dto: UpdateWarrantyDTO): Promise<Warranty | null> {
+    return this.warrantyModel.findByIdAndUpdate(id, dto, { new: true });
   }
 
   async deleteById(id: string): Promise<Warranty | null> {

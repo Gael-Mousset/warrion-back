@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Inject, UnauthorizedException, ConflictException } from '@nestjs/common';
 import * as argon2 from 'argon2';
 import { User } from './interfaces/user.interface';
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -10,12 +10,16 @@ export class UsersService {
   constructor(@Inject('USER_MODEL') private userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDTO): Promise<User> {
-    const hashedPassword = await argon2.hash(createUserDto.password);
-    const newUser = new this.userModel({
-      ...createUserDto,
-      password: hashedPassword,
-    });
-    return await newUser.save();
+    try {
+      const hashedPassword = await argon2.hash(createUserDto.password);
+      const newUser = new this.userModel({ ...createUserDto, password: hashedPassword });
+      return await newUser.save();
+    } catch (err: any) {
+      if (err.code === 11000) {
+        throw new ConflictException('Cet email est déjà utilisé.');
+      }
+      throw err;
+    }
   }
 
   async findAll(): Promise<User[]> {

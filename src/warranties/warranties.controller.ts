@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
 import { CreateWarrantyDTO } from './dto/create-warranty.dto';
+import { UpdateWarrantyDTO } from './dto/update-warranty.dto';
 import { WarrantiesService } from './warranties.service';
 import { Warranty } from './interfaces/warranty.interface';
 
@@ -23,10 +24,16 @@ export class WarrantiesController {
   }
 
   @Post()
-  async create(
-    @Body() createWarrantyDto: CreateWarrantyDTO,
-  ): Promise<Warranty> {
+  async create(@Body() createWarrantyDto: CreateWarrantyDTO): Promise<Warranty> {
     return await this.warrantiesService.create(createWarrantyDto);
+  }
+
+  @Patch(':id')
+  async updateById(
+    @Param('id') id: string,
+    @Body() updateWarrantyDto: UpdateWarrantyDTO,
+  ): Promise<Warranty | null> {
+    return await this.warrantiesService.updateById(id, updateWarrantyDto);
   }
 
   @Delete(':id')

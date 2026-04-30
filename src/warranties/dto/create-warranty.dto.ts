@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsOptional, Min, MinLength } from 'class-validator';
+import { IsString, IsInt, IsOptional, IsBoolean, Min, MinLength } from 'class-validator';
 
 export class CreateWarrantyDTO {
   @IsString()
@@ -25,4 +25,8 @@ export class CreateWarrantyDTO {
   @IsOptional()
   @IsString()
   notes?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isPrecious?: boolean;
 }

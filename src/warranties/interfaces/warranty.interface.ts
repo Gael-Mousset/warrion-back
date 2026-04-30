@@ -8,5 +8,6 @@ export interface Warranty extends Document {
   readonly warrantyDurationMonths: number;
   readonly photoUrl: string;
   readonly notes: string;
+  readonly isPrecious: boolean;
   readonly createdAt: Date;
 }
