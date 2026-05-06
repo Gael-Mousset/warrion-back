@@ -28,7 +28,7 @@ export class WarrantiesService {
   }
 
   async updateById(id: string, dto: UpdateWarrantyDTO): Promise<Warranty | null> {
-    return this.warrantyModel.findByIdAndUpdate(id, dto, { new: true });
+    return this.warrantyModel.findByIdAndUpdate(id, dto, { returnDocument: 'after' });
   }
 
   async deleteById(id: string): Promise<Warranty | null> {

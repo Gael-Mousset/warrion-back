@@ -20,6 +20,18 @@ export class UpdateWarrantyDTO {
 
   @IsOptional()
   @IsString()
+  brand?: string;
+
+  @IsOptional()
+  @IsString()
+  serialNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  store?: string;
+
+  @IsOptional()
+  @IsString()
   photoUrl?: string;
 
   @IsOptional()
@@ -29,4 +41,7 @@ export class UpdateWarrantyDTO {
   @IsOptional()
   @IsBoolean()
   isPrecious?: boolean;
+
+  @IsOptional()
+  documents?: { name: string; dataUrl: string; type: string }[];
 }
