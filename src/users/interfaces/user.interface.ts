@@ -5,4 +5,6 @@ export interface User extends Document {
   readonly name: string;
   readonly password: string;
   readonly createdAt: Date;
+  resetPasswordToken?: string | null;
+  resetPasswordExpires?: Date | null;
 }
